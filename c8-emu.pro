@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        chip8.cpp \
         graphics.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        chip8.h \
         graphics.h \
         mainwindow.h
 

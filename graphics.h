@@ -15,7 +15,7 @@ class Graphics: public QOpenGLWidget
 {
     Q_OBJECT
 public:
-    Graphics(Painter *painter, QWidget *parent);
+    Graphics(Painter *painter, uint8_t *pixels, QWidget *parent);
 
 public slots:
     void animate();
@@ -25,6 +25,7 @@ protected:
 
 private:
     Painter *painter;
+    uint8_t *pixels;
     int elapsed;
 };
 
@@ -36,7 +37,7 @@ public:
     Painter();
 
 public:
-    void paint(QPainter *painter, QPaintEvent *event, int elapsed);
+    void paint(QPainter *painter, QPaintEvent *event, int elapsed, uint8_t* pixels);
 
 private:
     QBrush background;

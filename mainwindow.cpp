@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    Graphics *gameStage = new Graphics(&painter, ui->gWidget);
+    Graphics *gameStage = new Graphics(&painter, c8.pixels.data(), ui->gWidget);
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, gameStage, &Graphics::animate);

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "graphics.h"
+#include "chip8.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,6 +23,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Painter painter;
+    Chip8 c8;
 };
 
 #endif // MAINWINDOW_H
