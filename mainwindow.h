@@ -19,6 +19,7 @@ public:
 
 private slots:
     void on_OpenFile_triggered();
+    void process();
 
 private:
     Ui::MainWindow *ui;
