@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->stepBtn->setEnabled(false);
+
+    // setup graphics
     Graphics *gameStage = new Graphics(&painter, c8.pixels.data(), ui->gWidget);
 
     // graphics timer, 50fps
@@ -24,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QTimer *processTimer = new QTimer(this);
     connect(processTimer, &QTimer::timeout, this, &MainWindow::process);
     processTimer->start(1000 / FREQUENCY);
+
+    // setup mem viewer
+    memViewer = new MemoryViewer(ui->memView, c8.memory.data());
 
     // game state
     start = false;
@@ -58,10 +63,12 @@ void MainWindow::on_startBtn_clicked()
         this->ui->stepBtn->setEnabled(false);
     } else {
         this->ui->stepBtn->setEnabled(true);
+        memViewer->display();
     }
 }
 
 void MainWindow::on_stepBtn_clicked()
 {
     c8.step();
+    memViewer->display();
 }

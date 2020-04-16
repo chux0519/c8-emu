@@ -28,12 +28,14 @@ SOURCES += \
         chip8.cpp \
         graphics.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        memoryviewer.cpp
 
 HEADERS += \
         chip8.h \
         graphics.h \
-        mainwindow.h
+        mainwindow.h \
+        memoryviewer.h
 
 FORMS += \
         mainwindow.ui

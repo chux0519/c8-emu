@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>615</width>
+    <width>660</width>
     <height>320</height>
    </rect>
   </property>
@@ -59,18 +59,24 @@ background: rgb(64, 32, 64);
      <string>step</string>
     </property>
    </widget>
-   <widget class="QListView" name="memView">
+   <widget class="QListWidget" name="memView">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>390</x>
       <y>20</y>
-      <width>200</width>
+      <width>240</width>
       <height>160</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QListView {
+     <string notr="true">QListWidget{
 background-color: rgb(0, 0, 0);
+color: rgb(217, 217, 217)
+}
+
+QListWidget::item::selected {
+background-color: rgb(0, 0, 0);
+color: rgb(255, 255, 0);
 }</string>
     </property>
    </widget>
@@ -80,7 +86,7 @@ background-color: rgb(0, 0, 0);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>615</width>
+     <width>660</width>
      <height>25</height>
     </rect>
    </property>

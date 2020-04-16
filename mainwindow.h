@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "graphics.h"
 #include "chip8.h"
+#include "memoryviewer.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +31,7 @@ private:
     Painter painter;
     Chip8 c8;
     bool start;
+    MemoryViewer *memViewer;
 };
 
 #endif // MAINWINDOW_H
