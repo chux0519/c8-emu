@@ -21,10 +21,15 @@ private slots:
     void on_OpenFile_triggered();
     void process();
 
+    void on_startBtn_clicked();
+
+    void on_stepBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     Painter painter;
     Chip8 c8;
+    bool start;
 };
 
 #endif // MAINWINDOW_H

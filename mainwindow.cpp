@@ -3,6 +3,7 @@
 #include "graphics.h"
 #include <QFileDialog>
 #include <QTimer>
+#include <QDebug>
 
 #define FREQUENCY 500
 
@@ -11,15 +12,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->stepBtn->setEnabled(false);
     Graphics *gameStage = new Graphics(&painter, c8.pixels.data(), ui->gWidget);
 
+    // graphics timer, 50fps
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, gameStage, &Graphics::animate);
     timer->start(20);
 
+    // chip8 cpu timer: $FREQUENCY herz
     QTimer *processTimer = new QTimer(this);
     connect(processTimer, &QTimer::timeout, this, &MainWindow::process);
     processTimer->start(1000 / FREQUENCY);
+
+    // game state
+    start = false;
 }
 
 MainWindow::~MainWindow()
@@ -39,5 +46,22 @@ void MainWindow::on_OpenFile_triggered()
 }
 
 void MainWindow::process() {
+    if (start) {
+        c8.step();
+    }
+}
+
+void MainWindow::on_startBtn_clicked()
+{
+    start = !start;
+    if (start) {
+        this->ui->stepBtn->setEnabled(false);
+    } else {
+        this->ui->stepBtn->setEnabled(true);
+    }
+}
+
+void MainWindow::on_stepBtn_clicked()
+{
     c8.step();
 }
