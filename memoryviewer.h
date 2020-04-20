@@ -7,11 +7,12 @@ class MemoryViewer
 {
 public:
     MemoryViewer(QListWidget *view, uint8_t *mem);
-    void display();
+    void display(uint16_t pc);
+    void reload(uint8_t *_mem);
 
 private:
     QListWidget *listWidget;
-    uint8_t *mem;
+    int rowNumber = 4;
 };
 
 #endif // MEMORYVIEWER_H

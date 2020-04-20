@@ -26,7 +26,6 @@ protected:
 private:
     Painter *painter;
     uint8_t *pixels;
-    int elapsed;
 };
 
 // Painter class
@@ -37,7 +36,7 @@ public:
     Painter();
 
 public:
-    void paint(QPainter *painter, QPaintEvent *event, int elapsed, uint8_t* pixels);
+    void paint(QPainter *painter, QPaintEvent *event, uint8_t* pixels);
 
 private:
     QBrush background;

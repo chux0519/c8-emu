@@ -6,14 +6,12 @@
 Graphics::Graphics(Painter *painter, uint8_t *pixels, QWidget *parent) :
     QOpenGLWidget(parent), painter(painter), pixels(pixels)
 {
-    elapsed = 0;
     setFixedSize(320, 160);
     setAutoFillBackground(false);
 }
 
 void Graphics::animate()
 {
-    elapsed = (elapsed + qobject_cast<QTimer*>(sender())->interval()) % 1000;
     update();
 }
 
@@ -23,7 +21,7 @@ void Graphics::paintEvent(QPaintEvent *event)
     QPainter qpainter;
     qpainter.begin(this);
     qpainter.setRenderHint(QPainter::Antialiasing);
-    painter->paint(&qpainter, event, elapsed, pixels);
+    painter->paint(&qpainter, event, pixels);
     qpainter.end();
 }
 
@@ -37,7 +35,7 @@ Painter::Painter()
     textFont.setPixelSize(50);
 }
 
-void Painter::paint(QPainter *painter, QPaintEvent *event, int elapsed, uint8_t* pixels)
+void Painter::paint(QPainter *painter, QPaintEvent *event, uint8_t* pixels)
 {
     int scale = 5;
     for(int i = 0; i < 64; i++) {

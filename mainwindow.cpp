@@ -15,12 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stepBtn->setEnabled(false);
 
     // setup graphics
-    Graphics *gameStage = new Graphics(&painter, c8.pixels.data(), ui->gWidget);
-
-    // graphics timer, 50fps
-    QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, gameStage, &Graphics::animate);
-    timer->start(20);
+    gameStage = new Graphics(&painter, c8.pixels.data(), ui->gWidget);
 
     // chip8 cpu timer: $FREQUENCY herz
     QTimer *processTimer = new QTimer(this);
@@ -32,6 +27,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // game state
     start = false;
+
+    // graphics timer, 50fps
+    elapsed = 0;
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MainWindow::ui_update);
+    timer->start(20);
 }
 
 MainWindow::~MainWindow()
@@ -43,16 +44,27 @@ void MainWindow::on_OpenFile_triggered()
 {
     QString filename = QFileDialog::getOpenFileName(this, "Choose ROM", "");
     if(!filename.isEmpty()) {
-        // open this file
-        // check this file size
         // load it into chip8 memory
-        c8.load_rom(filename.toLatin1().data());
+        if (c8.load_rom(filename.toLatin1().data())) {
+            memViewer->reload(c8.memory.data());
+        }
     }
 }
 
 void MainWindow::process() {
     if (start) {
         c8.step();
+    }
+}
+
+void MainWindow::ui_update() {
+    gameStage->animate();
+    int interval = qobject_cast<QTimer*>(sender())->interval();
+    elapsed += interval;
+    if(elapsed > 50) {
+        elapsed -= 50;
+        // 20fps
+        memViewer->display(c8.PC());
     }
 }
 
@@ -63,12 +75,12 @@ void MainWindow::on_startBtn_clicked()
         this->ui->stepBtn->setEnabled(false);
     } else {
         this->ui->stepBtn->setEnabled(true);
-        memViewer->display();
+        memViewer->display(c8.PC());
     }
 }
 
 void MainWindow::on_stepBtn_clicked()
 {
     c8.step();
-    memViewer->display();
+    memViewer->display(c8.PC());
 }

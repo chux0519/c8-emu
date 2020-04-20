@@ -21,6 +21,7 @@ public:
 private slots:
     void on_OpenFile_triggered();
     void process();
+    void ui_update();
 
     void on_startBtn_clicked();
 
@@ -32,6 +33,8 @@ private:
     Chip8 c8;
     bool start;
     MemoryViewer *memViewer;
+    Graphics *gameStage;
+    int elapsed;
 };
 
 #endif // MAINWINDOW_H

@@ -8,9 +8,21 @@ QString leftPadZero(QString s, int len) {
 }
 
 MemoryViewer::MemoryViewer(QListWidget *view, uint8_t *_mem):
-    listWidget(view), mem(_mem)
+    listWidget(view)
 {
-    int rowNumber = 4;
+    reload(_mem);
+}
+
+void MemoryViewer::display(uint16_t pc) {
+    int row = pc / rowNumber;
+    listWidget->setCurrentRow(row);
+    // move to bottom first, for align
+    listWidget->scrollToBottom();
+    listWidget->scrollToItem(listWidget->item(row - 2));
+}
+
+void MemoryViewer::reload(uint8_t *mem) {
+    listWidget->clear();
     int pos = 0;
     // init
     for( int r=0; r< 4096 / rowNumber; r++ )
@@ -23,11 +35,4 @@ MemoryViewer::MemoryViewer(QListWidget *view, uint8_t *_mem):
         }
         listWidget->addItem(sstr);
     }
-}
-
-void MemoryViewer::display() {
-    listWidget->setCurrentRow(513);
-    // move to bottom first, for align
-    listWidget->scrollToBottom();
-    listWidget->scrollToItem(listWidget->item(512));
 }
