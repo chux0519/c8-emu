@@ -73,8 +73,10 @@ void MainWindow::on_startBtn_clicked()
     start = !start;
     if (start) {
         this->ui->stepBtn->setEnabled(false);
+        this->ui->startBtn->setText("Pause");
     } else {
         this->ui->stepBtn->setEnabled(true);
+        this->ui->startBtn->setText("Resume");
         memViewer->display(c8.PC());
     }
 }
