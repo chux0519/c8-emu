@@ -484,7 +484,7 @@ void Chip8::step() {
       case 0x33:
         bcd = registers[x];
         memory[ir] = bcd / 100;
-        memory[ir + 1] = (bcd - bcd / 100) / 10;
+        memory[ir + 1] = (bcd - (bcd / 100) * 100) / 10;
         memory[ir + 2] = bcd % 10;
         pc += 2;
         break;
