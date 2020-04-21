@@ -27,6 +27,7 @@ CONFIG += c++11
 SOURCES += \
         chip8.cpp \
         graphics.cpp \
+        kbdsettingdialog.cpp \
         main.cpp \
         mainwindow.cpp \
         memoryviewer.cpp
@@ -34,10 +35,12 @@ SOURCES += \
 HEADERS += \
         chip8.h \
         graphics.h \
+        kbdsettingdialog.h \
         mainwindow.h \
         memoryviewer.h
 
 FORMS += \
+        kbdsettingdialog.ui \
         mainwindow.ui
 
 # Default rules for deployment.
