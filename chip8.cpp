@@ -240,7 +240,7 @@ uint8_t Chip8::V(size_t reg) { return registers[reg]; }
 
 uint8_t Chip8::mem(size_t addr) { return memory[addr]; }
 
-uint16_t Chip8::OP() { return opcode; }
+uint16_t Chip8::OP() { return memory[pc] << 8 | memory[pc + 1]; }
 
 uint16_t Chip8::IR() { return ir; }
 uint16_t Chip8::PC() { return pc; }

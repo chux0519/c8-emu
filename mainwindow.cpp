@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->stepBtn->setEnabled(false);
 
     // setup graphics
     gameStage = new Graphics(&painter, c8.pixels.data(), ui->gWidget);
@@ -27,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // game state
     start = false;
+    this->ui->stepBtn->setEnabled(!start);
 
     // graphics timer, 50fps
     elapsed = 0;
@@ -64,8 +64,21 @@ void MainWindow::ui_update() {
     if(elapsed > 50) {
         elapsed -= 50;
         // 20fps
-        memViewer->display(c8.PC());
+        ui_refresh();
     }
+}
+
+void MainWindow::ui_refresh() {
+    // memory viewer
+    memViewer->display(c8.PC());
+    // pc and op code viewer
+    QString pcLabel = "PC: 0x";
+    pcLabel += QString::number(this->c8.PC(), 16).toUpper();
+    QString opLabel = "OP: 0x";
+    opLabel += QString::number(this->c8.OP(), 16).toUpper();
+    opLabel += "(" + QString::fromStdString(this->c8.get_asm(this->c8.OP())).toUpper() + ")";
+    this->ui->pcLabel->setText(pcLabel);
+    this->ui->opLabel->setText(opLabel);
 }
 
 void MainWindow::on_startBtn_clicked()
@@ -77,12 +90,17 @@ void MainWindow::on_startBtn_clicked()
     } else {
         this->ui->stepBtn->setEnabled(true);
         this->ui->startBtn->setText("Resume");
-        memViewer->display(c8.PC());
+        ui_refresh();
     }
 }
 
 void MainWindow::on_stepBtn_clicked()
 {
-    c8.step();
     memViewer->display(c8.PC());
+    c8.step();
+}
+
+void MainWindow::on_kbdSetting_triggered()
+{
+    qDebug() << "should open keyboard settings";
 }

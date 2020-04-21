@@ -22,10 +22,13 @@ private slots:
     void on_OpenFile_triggered();
     void process();
     void ui_update();
+    void ui_refresh();
 
     void on_startBtn_clicked();
 
     void on_stepBtn_clicked();
+
+    void on_kbdSetting_triggered();
 
 private:
     Ui::MainWindow *ui;

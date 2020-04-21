@@ -27,12 +27,12 @@ void MemoryViewer::reload(uint8_t *mem) {
     // init
     for( int r=0; r< 4096 / rowNumber; r++ )
     {
-        pos += rowNumber;
         QString sstr = "0x" + leftPadZero(QString::number(pos, 16).toUpper(), 4) + " |";
         for (int i = 0; i < rowNumber; i++) {
             uint8_t reg = mem[r * rowNumber + i];
             sstr +=  " 0x" + leftPadZero(QString::number(reg, 16).toUpper(), 2);
         }
         listWidget->addItem(sstr);
+        pos += rowNumber;
     }
 }
