@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QKeyEvent>
 #include "graphics.h"
 #include "chip8.h"
 #include "memoryviewer.h"
@@ -17,6 +18,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 
 private slots:
     void on_OpenFile_triggered();
@@ -38,6 +42,7 @@ private:
     MemoryViewer *memViewer;
     Graphics *gameStage;
     int elapsed;
+    std::array<Qt::Key, 16> keymapping;
 };
 
 #endif // MAINWINDOW_H

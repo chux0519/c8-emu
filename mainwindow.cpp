@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "kbdsettingdialog.h"
 #include "graphics.h"
 #include <QFileDialog>
 #include <QTimer>
@@ -33,6 +34,14 @@ MainWindow::MainWindow(QWidget *parent) :
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::ui_update);
     timer->start(20);
+
+    // key mapping
+    keymapping = {
+        Qt::Key_1, Qt::Key_2, Qt::Key_3, Qt::Key_4,
+        Qt::Key_Q, Qt::Key_W, Qt::Key_E, Qt::Key_R,
+        Qt::Key_A, Qt::Key_S, Qt::Key_D, Qt::Key_F,
+        Qt::Key_Z, Qt::Key_X, Qt::Key_C, Qt::Key_V,
+    };
 }
 
 MainWindow::~MainWindow()
@@ -103,4 +112,24 @@ void MainWindow::on_stepBtn_clicked()
 void MainWindow::on_kbdSetting_triggered()
 {
     qDebug() << "should open keyboard settings";
+    KbdSettingDialog kbdSettingDialog;
+    kbdSettingDialog.setModal(true);
+    kbdSettingDialog.exec();
+}
+
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        for(int i = 0; i < keymapping.size(); i++) {
+            Qt::Key k = keymapping[i];
+            if (keyEvent->key() == k) {
+                // qDebug() << "key " << (event->type() == QEvent::KeyPress ? "down " : "up") << keyEvent->key() << "from" << obj;
+                c8.keyboard[i] = event->type() == QEvent::KeyPress ? 1 : 0;
+                return true;
+            }
+        }
+    }
+    return false;
 }
